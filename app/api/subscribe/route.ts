@@ -1,27 +1,35 @@
 import { NextResponse } from 'next/server';
 import mailchimp from '@mailchimp/mailchimp_marketing';
 
-// Check for required environment variables
-const apiKey = process.env.MAILCHIMP_API_KEY;
-const server = process.env.MAILCHIMP_SERVER_PREFIX;
-const listId = process.env.MAILCHIMP_LIST_ID;
-
-if (!apiKey || !server || !listId) {
-  console.error('Missing required Mailchimp environment variables');
-}
+// Hardcoded for development - move to environment variables for production
+const apiKey = 'f6896ac0ad9ef6d1403dd6bd47b629c0-us4';
+const server = 'us4';
 
 // Configure Mailchimp
 mailchimp.setConfig({
-  apiKey: apiKey || '',
-  server: server || '', // e.g., 'us10'
+  apiKey: apiKey,
+  server: server,
 });
 
 export async function POST(request: Request) {
   try {
-    // Check if environment variables are set
-    if (!apiKey || !server || !listId) {
+    // Get the audience ID first
+    // @ts-ignore - The type definitions are incomplete
+    const listsResponse = await mailchimp.lists.getAllLists();
+    console.log('Available lists:', JSON.stringify(listsResponse, null, 2));
+    
+    // Find the "impactors" audience or use the first one
+    let listId = '';
+    if (listsResponse && listsResponse.lists && listsResponse.lists.length > 0) {
+      const impactorsList = listsResponse.lists.find((list: any) => 
+        list.name.toLowerCase() === 'impactors'
+      );
+      
+      listId = impactorsList ? impactorsList.id : listsResponse.lists[0].id;
+      console.log('Using list ID:', listId);
+    } else {
       return NextResponse.json(
-        { error: 'Mailchimp is not properly configured' },
+        { error: 'No Mailchimp audiences found' },
         { status: 500 }
       );
     }
@@ -57,17 +65,24 @@ export async function POST(request: Request) {
     
     // Handle case where email already exists
     if (error.status === 400 && error.response?.text) {
-      const responseBody = JSON.parse(error.response.text);
-      if (responseBody.title === 'Member Exists') {
-        return NextResponse.json(
-          { error: 'You are already subscribed to our mailing list.' },
-          { status: 400 }
-        );
+      try {
+        const responseBody = JSON.parse(error.response.text);
+        if (responseBody.title === 'Member Exists') {
+          return NextResponse.json(
+            { error: 'You are already subscribed to our mailing list.' },
+            { status: 400 }
+          );
+        }
+      } catch (e) {
+        // Ignore JSON parsing error
       }
     }
 
     return NextResponse.json(
-      { error: 'Failed to subscribe. Please try again later.' },
+      { 
+        error: 'Failed to subscribe. Please try again later.',
+        details: error.message || 'Unknown error'
+      },
       { status: 500 }
     );
   }
