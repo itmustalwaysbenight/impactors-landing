@@ -77,9 +77,11 @@ export default function Marketplace() {
       el.innerText = marker.count.toString();
 
       // Add marker to map
-      new mapboxgl.Marker(el)
-        .setLngLat([marker.lng, marker.lat])
-        .addTo(map.current);
+      if (map.current) {
+        new mapboxgl.Marker(el)
+          .setLngLat([marker.lng, marker.lat])
+          .addTo(map.current);
+      }
     });
   }, [mapLoaded, projectMarkers]);
 
