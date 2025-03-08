@@ -1,14 +1,31 @@
 import { NextResponse } from 'next/server';
 import mailchimp from '@mailchimp/mailchimp_marketing';
 
+// Check for required environment variables
+const apiKey = process.env.MAILCHIMP_API_KEY;
+const server = process.env.MAILCHIMP_SERVER_PREFIX;
+const listId = process.env.MAILCHIMP_LIST_ID;
+
+if (!apiKey || !server || !listId) {
+  console.error('Missing required Mailchimp environment variables');
+}
+
 // Configure Mailchimp
 mailchimp.setConfig({
-  apiKey: process.env.MAILCHIMP_API_KEY,
-  server: process.env.MAILCHIMP_SERVER_PREFIX, // e.g., 'us10'
+  apiKey: apiKey || '',
+  server: server || '', // e.g., 'us10'
 });
 
 export async function POST(request: Request) {
   try {
+    // Check if environment variables are set
+    if (!apiKey || !server || !listId) {
+      return NextResponse.json(
+        { error: 'Mailchimp is not properly configured' },
+        { status: 500 }
+      );
+    }
+
     const { email } = await request.json();
 
     if (!email || !email.includes('@')) {
@@ -20,7 +37,7 @@ export async function POST(request: Request) {
 
     // Add member to Mailchimp list
     const response = await mailchimp.lists.addListMember(
-      process.env.MAILCHIMP_LIST_ID as string,
+      listId,
       {
         email_address: email,
         status: 'subscribed',
