@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Impactors Landing Page</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+        Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    .hero {
+      background-image: url('/hero.jpeg');
+      height: 100vh;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      position: relative;
+    }
+    header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      padding: 1.5rem 0;
+      background-color: rgba(0, 0, 0, 0.2);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      font-style: italic;
+      color: white;
+      text-decoration: none;
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+    .nav-link {
+      font-size: 1rem;
+      font-weight: 500;
+      color: white;
+      text-decoration: none;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 500;
+      text-decoration: none;
+      border: none;
+    }
+    .btn-outline {
+      color: black;
+      background-color: white;
+    }
+    .btn-solid {
+      background-color: white;
+      color: black;
+    }
+    .hero-content {
+      position: absolute;
+      top: 50%;
+      left: 5%;
+      transform: translateY(-50%);
+      color: white;
+      max-width: 550px;
+      padding-right: 2rem;
+    }
+    .hero-title {
+      font-size: 3.5rem;
+      font-weight: bold;
+      margin-bottom: 1.5rem;
+      line-height: 1.1;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+    .hero-text {
+      font-size: 1.25rem;
+      margin-bottom: 2.5rem;
+      line-height: 1.5;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    }
+    .contact {
+      padding: 5rem 0;
+      background-color: white;
+    }
+    .contact-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .contact-title {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+    .contact-text {
+      font-size: 1.2rem;
+      color: #666;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .form-container {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    .form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .form-label {
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+    .form-input {
+      height: 2.5rem;
+      padding: 0 0.75rem;
+      border: 1px solid #ddd;
+      font-size: 0.875rem;
+    }
+    .form-button {
+      height: 2.5rem;
+      background-color: black;
+      color: white;
+      border: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="/" class="logo">Logo</a>
+        <div class="nav">
+          <a href="/partners" class="nav-link">Partners</a>
+          <a href="#contact" class="btn btn-outline">Join the interest list</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div class="hero-content">
+      <h1 class="hero-title">Align your digital skills with meaningful portfolio projects</h1>
+      <p class="hero-text">We match digital volunteers with small- and medium nonprofit organisations in lack of resources.</p>
+      <a href="#contact" class="btn btn-solid">Join the interest list</a>
+    </div>
+  </div>
+
+  <section id="contact" class="contact">
+    <div class="container">
+      <div class="contact-header">
+        <h2 class="contact-title">Join our interest list</h2>
+        <p class="contact-text">Be the first to know when we match new projects with nonprofits.</p>
+      </div>
+      
+      <div class="form-container">
+        <form class="form">
+          <div class="form-group">
+            <label class="form-label">Name</label>
+            <input type="text" class="form-input" placeholder="Your name" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-input" placeholder="your.email@example.com" required>
+          </div>
+          <button type="submit" class="form-button">Join the interest list</button>
+        </form>
+      </div>
+    </div>
+  </section>
+</body>
+</html> 
