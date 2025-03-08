@@ -34,7 +34,8 @@ export default function EmailSubscription() {
     setLoading(true);
     
     try {
-      // Send the email to our Mailchimp API endpoint
+      // Send the email to our API endpoint
+      console.log('Submitting email:', email);
       const response = await fetch('/api/subscribe', {
         method: 'POST',
         headers: {
@@ -44,6 +45,7 @@ export default function EmailSubscription() {
       });
       
       const data = await response.json();
+      console.log('Response:', data);
       
       if (!response.ok) {
         throw new Error(data.error || 'Something went wrong');
@@ -52,8 +54,8 @@ export default function EmailSubscription() {
       setSuccess(true);
       setEmail('');
     } catch (error: any) {
-      setError(error.message || 'Something went wrong. Please try again later.');
       console.error('Subscription error:', error);
+      setError(error.message || 'Something went wrong. Please try again later.');
     } finally {
       setLoading(false);
     }
