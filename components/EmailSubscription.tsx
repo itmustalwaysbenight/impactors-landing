@@ -34,14 +34,26 @@ export default function EmailSubscription() {
     setLoading(true);
     
     try {
-      // Here you would typically send the email to your backend
-      // For now, we'll simulate a successful submission
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Send the email to our Mailchimp API endpoint
+      const response = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+      
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.error || 'Something went wrong');
+      }
       
       setSuccess(true);
       setEmail('');
-    } catch (err) {
-      setError('Something went wrong. Please try again later.');
+    } catch (error: any) {
+      setError(error.message || 'Something went wrong. Please try again later.');
+      console.error('Subscription error:', error);
     } finally {
       setLoading(false);
     }
