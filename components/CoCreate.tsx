@@ -35,8 +35,8 @@ export default function CoCreate() {
           
           <div className="relative">
             <Image 
-              src="/images/group1.jpeg"
-              alt="People collaborating in an office space"
+              src="/images/landing_4.png"
+              alt="Collaborative workspace with people working together"
               width={600}
               height={600}
               className="rounded-md w-full h-auto object-cover"

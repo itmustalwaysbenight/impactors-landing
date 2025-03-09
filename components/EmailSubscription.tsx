@@ -1,12 +1,23 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import TypeformSurvey from './TypeformSurvey';
 
 export default function EmailSubscription() {
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+  const surveyRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Scroll to the survey when it becomes visible
+    if (success && surveyRef.current) {
+      setTimeout(() => {
+        surveyRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 500); // Small delay to ensure DOM is updated
+    }
+  }, [success]);
 
   const validateEmail = (email: string) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -76,16 +87,56 @@ export default function EmailSubscription() {
             </div>
             
             {success ? (
-              <div className="bg-green-50 border border-green-200 rounded-lg p-8 mb-8 text-center">
-                <svg className="w-16 h-16 text-green-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-                <p className="text-green-800 font-medium text-xl">
-                  Thank you for subscribing!
-                </p>
-                <p className="text-green-700 mt-2">
-                  We'll keep you updated on our progress and notify you when we launch.
-                </p>
+              <div>
+                <div className="bg-green-50 border border-green-200 rounded-lg p-8 mb-8 text-center">
+                  <svg className="w-16 h-16 text-green-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                  <h3 className="text-green-800 font-bold text-2xl mb-2">
+                    Thank you for subscribing!
+                  </h3>
+                  <p className="text-green-700 text-lg mb-4">
+                    You're now on our interest list and will be notified when we launch.
+                  </p>
+                </div>
+                
+                <div ref={surveyRef} className="bg-blue-50 border border-blue-200 rounded-lg p-8 mb-8 text-center">
+                  <div className="flex items-center justify-center mb-4">
+                    <div className="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold mr-2">1</div>
+                    <div className="h-1 w-12 bg-blue-300"></div>
+                    <div className="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold">2</div>
+                  </div>
+                  <h3 className="text-blue-800 font-bold text-2xl mb-3">
+                    One more step: Quick Survey
+                  </h3>
+                  <p className="text-blue-700 text-lg mb-3">
+                    We'd love to learn more about you to better tailor our platform to your needs.
+                  </p>
+                  <p className="text-blue-600 font-medium mb-4">
+                    This short survey will take only 2-3 minutes to complete.
+                  </p>
+                  <button 
+                    onClick={() => {
+                      const surveyElement = document.querySelector('.typeform-container');
+                      if (surveyElement) {
+                        surveyElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                      }
+                    }}
+                    className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition-colors mb-4"
+                  >
+                    Start Survey Now
+                  </button>
+                  <p className="text-gray-500 text-sm mb-4">
+                    Having trouble viewing the survey? Use the "Open in new tab" option at the top of the survey.
+                  </p>
+                  <div className="flex justify-center">
+                    <svg className="w-6 h-6 text-blue-500 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                    </svg>
+                  </div>
+                </div>
+                
+                <TypeformSurvey isVisible={true} />
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="max-w-md mx-auto">

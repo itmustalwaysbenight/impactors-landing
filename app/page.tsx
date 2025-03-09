@@ -8,40 +8,28 @@ import WorkOpportunities from '@/components/WorkOpportunities';
 import UpcomingPilot from '@/components/UpcomingPilot';
 import Squad from '@/components/Squad';
 import Testimonials from '@/components/Testimonials';
-import Education from '@/components/Education';
 import FAQ from '@/components/FAQ';
 import Footer from '@/components/Footer';
 import EmailSubscription from '@/components/EmailSubscription';
 import Link from 'next/link';
+import RotatingHero from '@/components/RotatingHero';
 
 export default function Home() {
   return (
     <main>
-      <header className="absolute top-0 left-0 right-0 z-50 py-6 bg-black/20 border-b border-white/10">
+      <header className="absolute top-0 left-0 right-0 z-50 py-7 bg-black/70 backdrop-blur-sm border-b border-white/20 shadow-lg">
         <div className="container max-w-7xl mx-auto px-8">
           <div className="flex justify-between items-center">
             <Link href="/" className="text-2xl font-bold italic text-white">Logo</Link>
             <div className="flex items-center gap-8">
-              <Link href="/partners" className="text-base font-medium text-white">Partners</Link>
-              <Link href="#contact" className="px-6 py-3 text-base font-medium bg-white text-black">Join the interest list</Link>
+              <Link href="/partners" className="text-base font-medium text-white hover:text-gray-300 transition-colors">Partners</Link>
+              <Link href="#contact" className="px-6 py-3 text-base font-medium bg-white text-black hover:bg-gray-200 transition-colors shadow-md">Join the interest list</Link>
             </div>
           </div>
         </div>
       </header>
 
-      <div className="relative h-screen bg-cover bg-center" style={{ backgroundImage: "url('/hero.jpeg')" }}>
-        <div className="absolute top-1/2 left-[5%] transform -translate-y-1/2 text-white max-w-[550px] pr-8">
-          <h1 className="text-5xl font-bold mb-6 leading-tight shadow-sm">
-            Align your digital skills with meaningful portfolio projects
-          </h1>
-          <p className="text-xl mb-10 leading-relaxed shadow-sm">
-            We match digital volunteers with small- and medium nonprofit organisations in lack of resources.
-          </p>
-          <Link href="#contact" className="inline-flex items-center justify-center px-6 py-3 text-base font-medium bg-white text-black">
-            Join the interest list
-          </Link>
-        </div>
-      </div>
+      <RotatingHero />
 
       {/* Vision Section */}
       <Vision />
@@ -72,9 +60,6 @@ export default function Home() {
       
       {/* Testimonials Section */}
       <Testimonials />
-      
-      {/* Education Section */}
-      <Education />
       
       {/* FAQ Section */}
       <FAQ />
