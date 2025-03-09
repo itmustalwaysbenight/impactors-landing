@@ -4,269 +4,299 @@ import Image from 'next/image';
 import { useState, useRef, TouchEvent } from 'react';
 
 export default function WorkOpportunities() {
-  const [currentProfile, setCurrentProfile] = useState(0);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [touchStart, setTouchStart] = useState<number | null>(null);
-  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const [selectedProfile, setSelectedProfile] = useState<string | null>(null);
+  const [isDetailView, setIsDetailView] = useState(false);
   
   // Profile data
   const profiles = [
     {
-      image: "/images/lynette.png",
-      name: "Lynette",
-      profession: "UX/UI design",
-      location: "Oslo, Norway",
-      role: "Student"
+      id: 'jean',
+      image: "/images/jean.png", // Corrected image path
+      name: "Jean M",
+      profession: "Digital marketing",
+      location: "Paris, France",
+      role: "Freelancer",
+      projects: 2,
+      reviews: "7/10"
     },
     {
+      id: 'lynette',
+      image: "/images/lynette.png",
+      name: "Lynette A",
+      profession: "UX/UI designer",
+      location: "Oslo, Norway",
+      role: "Student",
+      projects: 4,
+      reviews: "8/10"
+    },
+    {
+      id: 'jacopo',
       image: "/images/kompis.png",
-      name: "Jacopo",
-      profession: "Graphic design",
+      name: "Jacopo S",
+      profession: "Graphic designer",
       location: "Berlin, Germany",
-      role: "Consultant"
+      role: "Consultant",
+      projects: 3,
+      reviews: "9/10"
     }
   ];
   
-  // Handle touch events for swiping
-  const handleTouchStart = (e: TouchEvent) => {
-    setTouchStart(e.targetTouches[0].clientX);
-    setTouchEnd(null);
+  // Handle profile selection
+  const handleProfileClick = (profileId: string) => {
+    setSelectedProfile(profileId);
+    setIsDetailView(true);
   };
   
-  const handleTouchMove = (e: TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX);
+  // Handle back button click
+  const handleBackClick = () => {
+    setIsDetailView(false);
+    setSelectedProfile(null);
   };
-  
-  const handleTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-    
-    const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > 50;
-    const isRightSwipe = distance < -50;
-    
-    if (isLeftSwipe && currentProfile === 0) {
-      setCurrentProfile(1);
-    } else if (isRightSwipe && currentProfile === 1) {
-      setCurrentProfile(0);
-    }
-    
-    // Reset touch values
-    setTouchStart(null);
-    setTouchEnd(null);
-  };
-  
-  // Navigation handlers
-  const goToPrevProfile = () => {
-    if (currentProfile > 0) {
-      setCurrentProfile(currentProfile - 1);
-    }
-  };
-  
-  const goToNextProfile = () => {
-    if (currentProfile < 1) {
-      setCurrentProfile(currentProfile + 1);
-    }
-  };
+
+  // Get the selected profile data
+  const selectedProfileData = profiles.find(profile => profile.id === selectedProfile);
 
   return (
     <section className="bg-black text-white py-24">
       <div className="container max-w-7xl mx-auto px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
           <div className="relative order-2 md:order-1">
-            {/* iPhone frame with CV content */}
+            {/* iPhone frame with talent marketplace */}
             <div className="relative max-w-[320px] mx-auto">
               {/* iPhone outer frame */}
               <div className="relative bg-[#111111] rounded-[40px] overflow-hidden border border-[#333333] shadow-xl" style={{ aspectRatio: '9/19' }}>
                 {/* Notch */}
                 <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-[30%] h-[25px] bg-[#111111] rounded-b-[14px] z-10"></div>
                 
-                {/* Navigation arrows - integrated into the phone frame */}
-                {currentProfile > 0 && (
-                  <button 
-                    onClick={goToPrevProfile}
-                    className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 bg-black/20 hover:bg-black/40 text-white w-8 h-8 rounded-full flex items-center justify-center transition-all"
-                    aria-label="Previous profile"
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M15 18l-6-6 6-6" />
-                    </svg>
-                  </button>
-                )}
-                
-                {currentProfile < 1 && (
-                  <button 
-                    onClick={goToNextProfile}
-                    className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 bg-black/20 hover:bg-black/40 text-white w-8 h-8 rounded-full flex items-center justify-center transition-all"
-                    aria-label="Next profile"
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M9 18l6-6-6-6" />
-                    </svg>
-                  </button>
-                )}
-                
-                {/* Screen content - swipeable container */}
-                <div 
-                  ref={containerRef}
-                  className="relative bg-[#f5f5f7] rounded-[32px] overflow-hidden h-full mx-[5px] my-[5px]"
-                  onTouchStart={handleTouchStart}
-                  onTouchMove={handleTouchMove}
-                  onTouchEnd={handleTouchEnd}
-                  style={{ height: 'calc(100% - 10px)' }}
-                >
-                  {/* Profiles container with horizontal layout */}
-                  <div 
-                    className="flex transition-transform duration-300 ease-in-out h-full"
-                    style={{ transform: `translateX(-${currentProfile * 100}%)` }}
-                  >
-                    {/* Map through profiles */}
-                    {profiles.map((profile, index) => (
-                      <div key={index} className="min-w-full min-h-full flex flex-col relative">
-                        {/* Profile image */}
-                        <div className="flex-shrink-0 relative">
-                          <Image 
-                            src={profile.image}
-                            alt={`${profile.name}'s profile photo`}
-                            width={600}
-                            height={800}
-                            className="w-full h-auto"
-                            priority={index === 0}
-                          />
-                          
-                          {/* Profile info overlay */}
-                          <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black/70 to-transparent text-white">
-                            <h3 className="text-2xl font-medium ml-1">{profile.name}</h3>
-                            <p className="text-lg">{profile.profession}</p>
-                            <p className="text-lg">{profile.location}</p>
-                            <p className="text-lg">{profile.role}</p>
-                          </div>
+                {/* Screen content */}
+                <div className="relative bg-white rounded-[32px] overflow-hidden mx-[5px] my-[5px]" style={{ height: 'calc(100% - 10px)' }}>
+                  {/* Content area */}
+                  <div className="h-full overflow-y-auto">
+                    {isDetailView && selectedProfileData ? (
+                      // Profile detail view
+                      <div className="h-full">
+                        {/* Header with back button */}
+                        <div className="sticky top-0 z-10 bg-white px-4 py-3 flex items-center border-b border-gray-200">
+                          <button 
+                            onClick={handleBackClick}
+                            className="mr-3 p-1 rounded-full hover:bg-gray-100 transition-colors"
+                          >
+                            <svg className="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                            </svg>
+                          </button>
+                          <h3 className="text-gray-800 text-lg font-bold">Profile Details</h3>
                         </div>
                         
-                        {/* CV content */}
-                        <div className="flex-grow bg-black text-white overflow-y-auto">
-                          <div className="text-center py-3 bg-black border-b border-gray-800">
-                            <p className="uppercase text-xs tracking-wider text-gray-400 font-semibold">PROFESSIONAL RESUME</p>
-                            <h3 className="text-xl font-bold text-white">{profile.name}'s CV</h3>
+                        {/* Profile content */}
+                        <div>
+                          {/* Profile image */}
+                          <div className="relative">
+                            <Image 
+                              src={selectedProfileData.image}
+                              alt={`${selectedProfileData.name}'s profile photo`}
+                              width={600}
+                              height={800}
+                              className="w-full h-auto filter grayscale"
+                            />
+                            
+                            {/* Profile info overlay */}
+                            <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black/70 to-transparent text-white">
+                              <h3 className="text-2xl font-medium">{selectedProfileData.name}</h3>
+                              <p className="text-lg">{selectedProfileData.profession}</p>
+                              <p className="text-lg">{selectedProfileData.location}</p>
+                              <p className="text-lg">{selectedProfileData.role}</p>
+                            </div>
                           </div>
                           
-                          <div className="p-4">
-                            <div className="mb-5">
-                              <div className="flex items-center mb-2">
-                                <div className="bg-gray-800 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">
-                                  <span className="text-xs">01</span>
-                                </div>
-                                <h4 className="text-sm font-bold text-white">Work Experience</h4>
-                              </div>
-                              
-                              {index === 0 ? (
-                                <>
-                                  <div className="ml-8 mb-3">
-                                    <div className="flex justify-between">
-                                      <p className="text-sm font-medium text-white">UX Intern at DesignLab</p>
-                                      <p className="text-xs text-gray-400">Jun'23-Present</p>
-                                    </div>
-                                    <p className="text-xs text-gray-400">Created wireframes and prototypes for mobile applications</p>
-                                  </div>
-                                  
-                                  <div className="ml-8">
-                                    <div className="flex justify-between">
-                                      <p className="text-sm font-medium text-white">Freelance Designer</p>
-                                      <p className="text-xs text-gray-400">Jan'22-May'23</p>
-                                    </div>
-                                    <p className="text-xs text-gray-400">Worked with 5+ clients on branding and UI projects</p>
-                                  </div>
-                                </>
-                              ) : (
-                                <>
-                                  <div className="ml-8 mb-3">
-                                    <div className="flex justify-between">
-                                      <p className="text-sm font-medium text-white">Senior Designer at Studio Kompis</p>
-                                      <p className="text-xs text-gray-400">Mar'21-Present</p>
-                                    </div>
-                                    <p className="text-xs text-gray-400">Lead designer for branding and identity projects</p>
-                                  </div>
-                                  
-                                  <div className="ml-8">
-                                    <div className="flex justify-between">
-                                      <p className="text-sm font-medium text-white">Art Director at Kreativ</p>
-                                      <p className="text-xs text-gray-400">Jan'18-Feb'21</p>
-                                    </div>
-                                    <p className="text-xs text-gray-400">Managed design team and client relationships</p>
-                                  </div>
-                                </>
-                              )}
+                          {/* CV content */}
+                          <div className="bg-black text-white">
+                            <div className="text-center py-3 bg-black border-b border-gray-800">
+                              <p className="uppercase text-xs tracking-wider text-gray-400 font-semibold">PROFESSIONAL RESUME</p>
+                              <h3 className="text-xl font-bold text-white">{selectedProfileData.name}'s CV</h3>
                             </div>
                             
-                            <div className="mb-5">
-                              <div className="flex items-center mb-2">
-                                <div className="bg-gray-800 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">
-                                  <span className="text-xs">02</span>
+                            <div className="p-4">
+                              <div className="mb-5">
+                                <div className="flex items-center mb-2">
+                                  <div className="bg-gray-800 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">
+                                    <span className="text-xs">01</span>
+                                  </div>
+                                  <h4 className="text-sm font-bold text-white">Work Experience</h4>
                                 </div>
-                                <h4 className="text-sm font-bold text-white">Education</h4>
+                                
+                                {selectedProfileData.id === 'lynette' ? (
+                                  <>
+                                    <div className="ml-8 mb-3">
+                                      <div className="flex justify-between">
+                                        <p className="text-sm font-medium text-white">UX Intern at DesignLab</p>
+                                        <p className="text-xs text-gray-400">Jun'23-Present</p>
+                                      </div>
+                                      <p className="text-xs text-gray-400">Created wireframes and prototypes for mobile applications</p>
+                                    </div>
+                                    
+                                    <div className="ml-8">
+                                      <div className="flex justify-between">
+                                        <p className="text-sm font-medium text-white">Freelance Designer</p>
+                                        <p className="text-xs text-gray-400">Jan'22-May'23</p>
+                                      </div>
+                                      <p className="text-xs text-gray-400">Worked with 5+ clients on branding and UI projects</p>
+                                    </div>
+                                  </>
+                                ) : selectedProfileData.id === 'jacopo' ? (
+                                  <>
+                                    <div className="ml-8 mb-3">
+                                      <div className="flex justify-between">
+                                        <p className="text-sm font-medium text-white">Senior Designer at Studio Kompis</p>
+                                        <p className="text-xs text-gray-400">Mar'21-Present</p>
+                                      </div>
+                                      <p className="text-xs text-gray-400">Lead designer for branding and identity projects</p>
+                                    </div>
+                                    
+                                    <div className="ml-8">
+                                      <div className="flex justify-between">
+                                        <p className="text-sm font-medium text-white">Art Director at Kreativ</p>
+                                        <p className="text-xs text-gray-400">Jan'18-Feb'21</p>
+                                      </div>
+                                      <p className="text-xs text-gray-400">Managed design team and client relationships</p>
+                                    </div>
+                                  </>
+                                ) : (
+                                  <>
+                                    <div className="ml-8 mb-3">
+                                      <div className="flex justify-between">
+                                        <p className="text-sm font-medium text-white">Marketing Specialist at DigiGrowth</p>
+                                        <p className="text-xs text-gray-400">Sep'22-Present</p>
+                                      </div>
+                                      <p className="text-xs text-gray-400">Managed digital campaigns and social media strategy</p>
+                                    </div>
+                                    
+                                    <div className="ml-8">
+                                      <div className="flex justify-between">
+                                        <p className="text-sm font-medium text-white">Content Creator</p>
+                                        <p className="text-xs text-gray-400">Mar'20-Aug'22</p>
+                                      </div>
+                                      <p className="text-xs text-gray-400">Created content for various digital platforms</p>
+                                    </div>
+                                  </>
+                                )}
                               </div>
                               
-                              {index === 0 ? (
-                                <div className="ml-8">
-                                  <div className="flex justify-between">
-                                    <p className="text-sm font-medium text-white">BA Design, Oslo University</p>
-                                    <p className="text-xs text-gray-400">2021-2024</p>
+                              <div className="mb-5">
+                                <div className="flex items-center mb-2">
+                                  <div className="bg-gray-800 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">
+                                    <span className="text-xs">02</span>
                                   </div>
-                                  <p className="text-xs text-gray-400">Focus: UX/UI design, Design thinking</p>
+                                  <h4 className="text-sm font-bold text-white">Education</h4>
                                 </div>
-                              ) : (
-                                <div className="ml-8">
-                                  <div className="flex justify-between">
-                                    <p className="text-sm font-medium text-white">MA Graphic Design, Berlin Arts</p>
-                                    <p className="text-xs text-gray-400">2015-2017</p>
+                                
+                                {selectedProfileData.id === 'lynette' ? (
+                                  <div className="ml-8">
+                                    <div className="flex justify-between">
+                                      <p className="text-sm font-medium text-white">BA Design, Oslo University</p>
+                                      <p className="text-xs text-gray-400">2021-2024</p>
+                                    </div>
+                                    <p className="text-xs text-gray-400">Focus: UX/UI design, Design thinking</p>
                                   </div>
-                                  <p className="text-xs text-gray-400">Focus: Brand identity, Typography</p>
-                                </div>
-                              )}
-                            </div>
-                            
-                            <div>
-                              <div className="flex items-center mb-2">
-                                <div className="bg-gray-800 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">
-                                  <span className="text-xs">03</span>
-                                </div>
-                                <h4 className="text-sm font-bold text-white">Skills</h4>
+                                ) : selectedProfileData.id === 'jacopo' ? (
+                                  <div className="ml-8">
+                                    <div className="flex justify-between">
+                                      <p className="text-sm font-medium text-white">MA Graphic Design, Berlin Arts</p>
+                                      <p className="text-xs text-gray-400">2015-2017</p>
+                                    </div>
+                                    <p className="text-xs text-gray-400">Focus: Brand identity, Typography</p>
+                                  </div>
+                                ) : (
+                                  <div className="ml-8">
+                                    <div className="flex justify-between">
+                                      <p className="text-sm font-medium text-white">Digital Marketing Certificate, Paris School of Digital</p>
+                                      <p className="text-xs text-gray-400">2020-2022</p>
+                                    </div>
+                                    <p className="text-xs text-gray-400">Focus: Social Media Marketing, SEO, Content Strategy</p>
+                                  </div>
+                                )}
                               </div>
                               
-                              {index === 0 ? (
-                                <div className="ml-8 flex flex-wrap gap-1">
-                                  <span className="text-xs bg-gray-800 text-white px-2 py-1 rounded-md">Figma</span>
-                                  <span className="text-xs bg-gray-800 text-white px-2 py-1 rounded-md">Adobe XD</span>
-                                  <span className="text-xs bg-gray-800 text-white px-2 py-1 rounded-md">Sketch</span>
-                                  <span className="text-xs bg-gray-800 text-white px-2 py-1 rounded-md">UI/UX</span>
-                                  <span className="text-xs bg-gray-800 text-white px-2 py-1 rounded-md">Prototyping</span>
+                              <div>
+                                <div className="flex items-center mb-2">
+                                  <div className="bg-gray-800 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">
+                                    <span className="text-xs">03</span>
+                                  </div>
+                                  <h4 className="text-sm font-bold text-white">Skills</h4>
                                 </div>
-                              ) : (
-                                <div className="ml-8 flex flex-wrap gap-1">
-                                  <span className="text-xs bg-gray-800 text-white px-2 py-1 rounded-md">Illustrator</span>
-                                  <span className="text-xs bg-gray-800 text-white px-2 py-1 rounded-md">Photoshop</span>
-                                  <span className="text-xs bg-gray-800 text-white px-2 py-1 rounded-md">InDesign</span>
-                                  <span className="text-xs bg-gray-800 text-white px-2 py-1 rounded-md">Branding</span>
-                                  <span className="text-xs bg-gray-800 text-white px-2 py-1 rounded-md">Typography</span>
-                                </div>
-                              )}
+                                
+                                {selectedProfileData.id === 'lynette' ? (
+                                  <div className="ml-8 flex flex-wrap gap-1">
+                                    <span className="text-xs bg-gray-800 text-white px-2 py-1 rounded-md">Figma</span>
+                                    <span className="text-xs bg-gray-800 text-white px-2 py-1 rounded-md">Adobe XD</span>
+                                    <span className="text-xs bg-gray-800 text-white px-2 py-1 rounded-md">Sketch</span>
+                                    <span className="text-xs bg-gray-800 text-white px-2 py-1 rounded-md">UI/UX</span>
+                                    <span className="text-xs bg-gray-800 text-white px-2 py-1 rounded-md">Prototyping</span>
+                                  </div>
+                                ) : selectedProfileData.id === 'jacopo' ? (
+                                  <div className="ml-8 flex flex-wrap gap-1">
+                                    <span className="text-xs bg-gray-800 text-white px-2 py-1 rounded-md">Illustrator</span>
+                                    <span className="text-xs bg-gray-800 text-white px-2 py-1 rounded-md">Photoshop</span>
+                                    <span className="text-xs bg-gray-800 text-white px-2 py-1 rounded-md">InDesign</span>
+                                    <span className="text-xs bg-gray-800 text-white px-2 py-1 rounded-md">Branding</span>
+                                    <span className="text-xs bg-gray-800 text-white px-2 py-1 rounded-md">Typography</span>
+                                  </div>
+                                ) : (
+                                  <div className="ml-8 flex flex-wrap gap-1">
+                                    <span className="text-xs bg-gray-800 text-white px-2 py-1 rounded-md">SEO</span>
+                                    <span className="text-xs bg-gray-800 text-white px-2 py-1 rounded-md">Content Marketing</span>
+                                    <span className="text-xs bg-gray-800 text-white px-2 py-1 rounded-md">Social Media Management</span>
+                                    <span className="text-xs bg-gray-800 text-white px-2 py-1 rounded-md">Email Marketing</span>
+                                    <span className="text-xs bg-gray-800 text-white px-2 py-1 rounded-md">Analytics</span>
+                                  </div>
+                                )}
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    ))}
+                    ) : (
+                      // Talent marketplace view
+                      <div className="p-6">
+                        <h2 className="text-gray-800 text-2xl font-bold mb-4">A marketplace for talent</h2>
+                        <h3 className="text-gray-700 text-xl mb-6">Find new hires</h3>
+                        
+                        <div className="space-y-6">
+                          {profiles.map((profile) => (
+                            <div key={profile.id} className="flex bg-gray-100 rounded-lg overflow-hidden shadow-sm">
+                              {/* Profile image */}
+                              <div className="w-1/2">
+                                <Image 
+                                  src={profile.image}
+                                  alt={`${profile.name}'s profile photo`}
+                                  width={300}
+                                  height={300}
+                                  className="w-full h-full object-cover filter grayscale"
+                                />
+                              </div>
+                              
+                              {/* Profile info */}
+                              <div className="w-1/2 p-4 flex flex-col justify-between bg-gray-50">
+                                <div>
+                                  <h4 className="text-gray-800 text-lg font-medium mb-1">{profile.name}</h4>
+                                  <p className="text-gray-600 text-sm mb-3">{profile.profession}</p>
+                                  <p className="text-gray-600 text-sm">Projects: {profile.projects}</p>
+                                  <p className="text-gray-600 text-sm">Reviews: {profile.reviews}</p>
+                                </div>
+                                
+                                <button 
+                                  onClick={() => handleProfileClick(profile.id)}
+                                  className="mt-4 w-full py-2 bg-[#4d5a4a] text-white rounded text-sm font-medium hover:bg-[#5d6a5a] transition-colors"
+                                >
+                                  View portfolio
+                                </button>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
-                </div>
-                
-                {/* Swipe indicator */}
-                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-                  <div 
-                    className={`w-2 h-2 rounded-full ${currentProfile === 0 ? 'bg-white' : 'bg-gray-600'}`}
-                    onClick={() => setCurrentProfile(0)}
-                  ></div>
-                  <div 
-                    className={`w-2 h-2 rounded-full ${currentProfile === 1 ? 'bg-white' : 'bg-gray-600'}`}
-                    onClick={() => setCurrentProfile(1)}
-                  ></div>
                 </div>
               </div>
             </div>

@@ -129,14 +129,35 @@ export default function RotatingHero() {
       {/* Content (always on top) */}
       <div className="absolute top-1/2 left-[5%] transform -translate-y-1/2 text-white max-w-[550px] pr-8 z-10">
         <h1 className="text-5xl font-bold mb-6 leading-tight shadow-sm">
-          Align your digital skills with meaningful portfolio projects
+          We match talented volunteers with nonprofits.
         </h1>
         <p className="text-xl mb-10 leading-relaxed shadow-sm">
-          We match digital volunteers with small- and medium nonprofit organisations in lack of resources.
+          Align your digital skills with meaningful portfolio projects
         </p>
         <Link href="#contact" className="inline-flex items-center justify-center px-6 py-3 text-base font-medium bg-white text-black hover:bg-gray-200 transition-colors">
           Join the interest list
         </Link>
+      </div>
+      
+      {/* Highlight Boxes */}
+      <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2 flex justify-center gap-6 z-10 w-full max-w-5xl px-4">
+        {/* Box 1: Meet People */}
+        <div className="bg-black/60 backdrop-blur-sm border-t border-l border-white/10 p-6 flex-1 text-center text-white transition-all shadow-md hover:translate-y-[-2px]">
+          <div className="mb-3 text-2xl font-bold">Meet people</div>
+          <p className="text-sm text-gray-200">Connect with other volunteers and nonprofits who share your passion</p>
+        </div>
+        
+        {/* Box 2: Up Your Skills */}
+        <div className="bg-black/60 backdrop-blur-sm border-t border-l border-white/10 p-6 flex-1 text-center text-white transition-all shadow-md hover:translate-y-[-2px]">
+          <div className="mb-3 text-2xl font-bold">Up your skills</div>
+          <p className="text-sm text-gray-200">Learn and grow by working on challenging projects with real impact</p>
+        </div>
+        
+        {/* Box 3: Build Portfolio */}
+        <div className="bg-black/60 backdrop-blur-sm border-t border-l border-white/10 p-6 flex-1 text-center text-white transition-all shadow-md hover:translate-y-[-2px]">
+          <div className="mb-3 text-2xl font-bold">Build portfolio</div>
+          <p className="text-sm text-gray-200">Create real-world projects that showcase your skills to future employers</p>
+        </div>
       </div>
       
       {/* Image indicators */}
