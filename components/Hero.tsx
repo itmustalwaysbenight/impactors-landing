@@ -86,10 +86,10 @@ const Hero = () => {
         }}
       >
         <h1 style={{ fontSize: "3.5rem", fontWeight: "bold", marginBottom: "1rem" }}>
-          Align your digital skills with meaningful portfolio projects
+          We match digital volunteers with nonprofits.
         </h1>
         <p style={{ fontSize: "1.2rem", marginBottom: "2rem" }}>
-          We match digital volunteers with small- and medium nonprofit organisations in lack of resources.
+          Align your digital skills with meaningful portfolio projects
         </p>
         <Link
           href="#contact"

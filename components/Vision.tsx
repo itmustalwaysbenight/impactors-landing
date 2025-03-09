@@ -15,9 +15,7 @@ export default function Vision() {
             </p>
             
             <p className="text-lg mb-6">
-              We believe in democratizing access and lowering the threshold to engaging
-              volunteer opportunities - by bridging the gap between grassroots nonprofits
-              in lack of resources, and talented volunteers eager to make a difference.
+              We believe in lowering barriers to voluntary opportunities - by bridging the gap between grassroots nonprofits in lack of resources, and talented volunteers eager to make a difference.
             </p>
             
             <p className="text-lg mb-16">

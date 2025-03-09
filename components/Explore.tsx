@@ -4,8 +4,8 @@ export default function Explore() {
       <div className="container max-w-7xl mx-auto px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
           <div>
-            <h2 className="text-5xl font-bold mb-6 leading-tight">
-              Let&apos;s explore how we can make volunteering f%&#ing cool?
+            <h2 className="text-5xl mb-6 leading-tight font-normal">
+              Let&apos;s explore how we can make <span className="font-bold">nonprofit</span> volunteering f%&#ing cool?
             </h2>
           </div>
           
