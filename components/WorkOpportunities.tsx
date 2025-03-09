@@ -11,7 +11,7 @@ export default function WorkOpportunities() {
   const profiles = [
     {
       id: 'jean',
-      image: "/images/jean.png", // Corrected image path
+      image: "/images/hilde.png", // Using a different image that we know exists
       name: "Jean M",
       profession: "Digital marketing",
       location: "Paris, France",
@@ -98,6 +98,13 @@ export default function WorkOpportunities() {
                               width={600}
                               height={800}
                               className="w-full h-auto filter grayscale"
+                              onError={(e) => {
+                                // Fallback to a placeholder if image fails to load
+                                const target = e.target as HTMLImageElement;
+                                target.onerror = null; // Prevent infinite loop
+                                target.src = "https://via.placeholder.com/600x800?text=Profile+Photo";
+                              }}
+                              unoptimized // Skip Next.js image optimization for troubleshooting
                             />
                             
                             {/* Profile info overlay */}
@@ -272,6 +279,13 @@ export default function WorkOpportunities() {
                                   width={300}
                                   height={300}
                                   className="w-full h-full object-cover filter grayscale"
+                                  onError={(e) => {
+                                    // Fallback to a placeholder if image fails to load
+                                    const target = e.target as HTMLImageElement;
+                                    target.onerror = null; // Prevent infinite loop
+                                    target.src = "https://via.placeholder.com/300x300?text=Profile+Photo";
+                                  }}
+                                  unoptimized // Skip Next.js image optimization for troubleshooting
                                 />
                               </div>
                               

@@ -31,6 +31,9 @@ export default function Home() {
 
       <RotatingHero />
 
+      {/* Testimonials Section */}
+      <Testimonials />
+      
       {/* Vision Section */}
       <Vision />
       
@@ -57,9 +60,6 @@ export default function Home() {
       
       {/* Squad Section */}
       <Squad />
-      
-      {/* Testimonials Section */}
-      <Testimonials />
       
       {/* FAQ Section */}
       <FAQ />
