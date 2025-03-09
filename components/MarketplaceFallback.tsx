@@ -18,6 +18,205 @@ export default function MarketplaceFallback() {
   // Job listings data
   const allJobs = [
     {
+      id: 'business-development-1',
+      title: 'Business Development',
+      match: '97%',
+      description: 'Mental health journal system',
+      details: 'View Details',
+      skills: ['Product Development', 'Feedback', 'Project Management'],
+      organization: 'Mental Health Society',
+      duration: '3-4 weeks',
+      location: 'Physical or remote'
+    },
+    {
+      id: 'marketing-1',
+      title: 'Marketing',
+      match: '91%',
+      description: 'Press releases for mental health',
+      details: 'View Details',
+      skills: ['Articles', 'Press Release', 'Communication'],
+      organization: 'Mental Health Society',
+      duration: '1-2 weeks',
+      location: 'Physical or remote'
+    },
+    {
+      id: 'communication-1',
+      title: 'Communication',
+      match: '94%',
+      description: 'Articles and blog posts for mental health',
+      details: 'View Details',
+      skills: ['Language', 'Text', 'Content Creation'],
+      organization: 'Mental Health Society',
+      duration: '1-2 weeks',
+      location: 'Physical or remote'
+    },
+    {
+      id: 'graphic-design-1',
+      title: 'Graphic Design',
+      match: '91%',
+      description: 'Playful illustrations for mental health',
+      details: 'View Details',
+      skills: ['Expertise with Illustrations', 'Brand Guidelines'],
+      organization: 'Mental Health Society',
+      duration: '1-2 weeks',
+      location: 'Physical or remote'
+    },
+    {
+      id: 'ux-ui-design-1',
+      title: 'UX/UI Design',
+      match: '95%',
+      description: 'Survey and insight for animal welfare',
+      details: 'View Details',
+      skills: ['Interest and User Experience', 'User Testing'],
+      organization: 'Biosphere: 15 Life above land',
+      duration: '1-3 weeks',
+      location: 'Physical or remote'
+    },
+    {
+      id: 'social-media-1',
+      title: 'Social Media',
+      match: '81%',
+      description: 'Micro influencer engagement for climate',
+      details: 'View Details',
+      skills: ['Branding', 'Social Media Management', 'Project Management'],
+      organization: 'Biosphere: 13 Climate action',
+      duration: '1-2 weeks',
+      location: 'Physical or remote'
+    },
+    {
+      id: 'marketing-2',
+      title: 'Marketing',
+      match: '86%',
+      description: 'Press releases for animal welfare',
+      details: 'View Details',
+      skills: ['Articles', 'Press Release', 'Communication'],
+      organization: 'Biosphere: 15 Life above land',
+      duration: '1-2 weeks',
+      location: 'Remote'
+    },
+    {
+      id: 'communication-2',
+      title: 'Communication',
+      match: '93%',
+      description: 'Press releases for animal welfare',
+      details: 'View Details',
+      skills: ['Articles', 'Press Release', 'Communication'],
+      organization: 'Biosphere: 15 Life above land',
+      duration: '1-2 weeks',
+      location: 'Remote'
+    },
+    {
+      id: 'graphic-design-2',
+      title: 'Graphic Design',
+      match: '97%',
+      description: 'Graphic universe for animal welfare',
+      details: 'View Details',
+      skills: ['Creativity', 'Brand Guidelines', 'Illustration'],
+      organization: 'Biosphere: 15 Life above land',
+      duration: '1-2 weeks',
+      location: 'Physical or remote'
+    },
+    {
+      id: 'ux-ui-design-2',
+      title: 'UX/UI Design',
+      match: '89%',
+      description: 'Website and AB testing for mental health',
+      details: 'View Details',
+      skills: ['Code', 'Insight', 'Prototyping'],
+      organization: 'Society: 3 Health and well-being',
+      duration: '1-3 weeks',
+      location: 'Physical or remote'
+    },
+    {
+      id: 'business-development-2',
+      title: 'Business Development',
+      match: '86%',
+      description: 'Fundraising streams for mental health',
+      details: 'View Details',
+      skills: ['Revenue Development', 'Communication', 'Project Management'],
+      organization: 'Society: 3 Health and well-being',
+      duration: '3-4 weeks',
+      location: 'Physical or remote'
+    },
+    {
+      id: 'business-development-3',
+      title: 'Business Development',
+      match: '83%',
+      description: 'Local farmers marketplace for animal welfare',
+      details: 'View Details',
+      skills: ['Web Development', 'E-commerce', 'AI Tools'],
+      organization: 'Responsible consumption and production',
+      duration: '2-4 weeks',
+      location: 'Physical or remote'
+    },
+    {
+      id: 'social-media-2',
+      title: 'Social Media',
+      match: '86%',
+      description: 'Social media influencers for education',
+      details: 'View Details',
+      skills: ['Social Media', 'Branding', 'Marketing'],
+      organization: 'Society: 4 Quality education',
+      duration: '1-2 weeks',
+      location: 'Physical or remote'
+    },
+    {
+      id: 'graphic-design-3',
+      title: 'Graphic Design',
+      match: '86%',
+      description: 'Re-branding for education',
+      details: 'View Details',
+      skills: ['Adobe', 'Figma', 'Brand Guidelines'],
+      organization: 'Society: 4 Quality education',
+      duration: '2-3 weeks',
+      location: 'Physical or remote'
+    },
+    {
+      id: 'ux-ui-design-3',
+      title: 'UX/UI Design',
+      match: '93%',
+      description: 'AB testing for climate',
+      details: 'View Details',
+      skills: ['Code', 'Insight', 'Prototyping'],
+      organization: 'Biosphere: 13 Climate action',
+      duration: '2-3 weeks',
+      location: 'Physical or remote'
+    },
+    {
+      id: 'graphic-design-4',
+      title: 'Graphic Design',
+      match: '83%',
+      description: 'Community gardening forum for climate',
+      details: 'View Details',
+      skills: ['Graphic Design', 'Concept Development', 'Brand Building'],
+      organization: 'Biosphere: 13 Climate action',
+      duration: '1-2 weeks',
+      location: 'Physical or remote'
+    },
+    {
+      id: 'business-development-4',
+      title: 'Business Development',
+      match: '79%',
+      description: 'Community gardening forum for animal welfare',
+      details: 'View Details',
+      skills: ['Product Development', 'Web Development'],
+      organization: 'Responsible consumption and production',
+      duration: '2-3 weeks',
+      location: 'Physical or remote'
+    },
+    {
+      id: 'communication-3',
+      title: 'Communication',
+      match: '94%',
+      description: 'Communication strategy for climate',
+      details: 'View Details',
+      skills: ['Communication', 'Strategy', 'Project Management'],
+      organization: 'Biosphere: 13 Climate action',
+      duration: '2-3 weeks',
+      location: 'Physical or remote'
+    },
+    // Original jobs
+    {
       id: 'ux-designer',
       title: 'UX Designer',
       match: '85%',
@@ -289,7 +488,7 @@ export default function MarketplaceFallback() {
                         <div className="mb-4">
                           <div className="flex justify-between items-start mb-3">
                             <h2 className="text-white text-2xl font-bold">{selectedJobData.title}</h2>
-                            <span className="text-sm px-3 py-1 rounded bg-[#4d5a4a] text-white">{selectedJobData.match} match</span>
+                            <span className="text-xs px-2 py-0.5 rounded bg-[#4d5a4a] text-white whitespace-nowrap">{selectedJobData.match} match</span>
                           </div>
                           <p className="text-gray-300 text-base mb-6">{selectedJobData.description}</p>
                           
@@ -387,7 +586,7 @@ export default function MarketplaceFallback() {
                                   <div className="p-5">
                                     <div className="flex justify-between items-start mb-2">
                                       <h4 className="text-white text-xl font-semibold">{job.title}</h4>
-                                      <span className="text-sm px-3 py-1 rounded bg-[#4d5a4a] text-white">{job.match} match</span>
+                                      <span className="text-xs px-2 py-0.5 rounded bg-[#4d5a4a] text-white whitespace-nowrap">{job.match} match</span>
                                     </div>
                                     <p className="text-gray-400 text-base mb-3">{job.description}</p>
                                     <p className="text-[#6d8a6d] text-sm font-medium">{job.details}</p>
